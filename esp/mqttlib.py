@@ -9,6 +9,9 @@
 #
 
 # Note: This is a copy of a library found on Github: All credits to original creators.
+# Works on MicroPython
+# To avoid errors, always use a keepalive of 10 seconds
+
 
 import usocket as socket
 import ustruct as struct
