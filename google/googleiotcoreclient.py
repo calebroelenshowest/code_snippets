@@ -233,7 +233,7 @@ class GoogleIotCoreClient:
 
     @property
     def device_command_topic(self):
-        return f"/devices/{self.__credentials.device_id}/commands/#"
+        return f"/devices/{self.__credentials.device_id}/commands"
 
 
 
