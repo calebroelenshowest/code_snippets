@@ -10,6 +10,7 @@ import jwt
 import paho.mqtt.client as mqtt
 
 # Created by Caleb Roelens, adapted from google cloud example codes.
+# Recreated from: https://github.com/GoogleCloudPlatform/python-docs-samples/blob/main/iot/api-client/mqtt_example/cloudiot_mqtt_example.py
 
 class GoogleIotCoreCredentials:
 
