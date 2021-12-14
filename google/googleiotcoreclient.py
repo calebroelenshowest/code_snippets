@@ -9,6 +9,7 @@ import json
 import jwt
 import paho.mqtt.client as mqtt
 
+# Created by Caleb Roelens, adapted from google cloud example codes.
 
 class GoogleIotCoreCredentials:
 
