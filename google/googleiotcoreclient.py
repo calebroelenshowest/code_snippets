@@ -155,6 +155,7 @@ class GoogleIotCoreClient:
         self.__client_id = ""
         # Setup device
         self.__create_client()
+        self.__setup_subs()
         # Run loop
 
     @property
@@ -188,7 +189,11 @@ class GoogleIotCoreClient:
         print("Client creation done.")
         return self.__client
 
-    def setup_subs(self):
+    def loop_start(self):
+        self.__client: mqtt.Client
+        self.__client.loop_start()
+
+    def __setup_subs(self):
         device_id = self.__credentials.device_id
         self.__client.subscribe(f"/devices/{device_id}/config", qos=1)
         self.__client.subscribe(f"/devices/{device_id}/commands/#", qos=0)
@@ -224,6 +229,10 @@ class GoogleIotCoreClient:
     def error_str(rc):
         """Convert a Paho error to a human readable string."""
         return '{}: {}'.format(rc, mqtt.error_string(rc))
+
+    @property
+    def device_command_topic(self):
+        return f"/devices/{self.__credentials.device_id}/commands/#"
 
 
 
