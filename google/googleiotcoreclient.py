@@ -9,8 +9,6 @@ import json
 import jwt
 import paho.mqtt.client as mqtt
 
-# Created by Caleb Roelens, adapted from google cloud example codes.
-# Recreated from: https://github.com/GoogleCloudPlatform/python-docs-samples/blob/main/iot/api-client/mqtt_example/cloudiot_mqtt_example.py
 
 class GoogleIotCoreCredentials:
 
@@ -94,7 +92,7 @@ class GoogleIotCoreCredentials:
 
 class GoogleIotCoreClientFunctions:
 
-    def __init__(self, on_connect, on_publish, on_disconnect, on_message):
+    def __init__(self, on_connect=None, on_publish=None, on_disconnect=None, on_message=None):
         self.__on_connect = on_connect
         self.__on_publish = on_publish
         self.__on_disconnect = on_disconnect
@@ -181,10 +179,14 @@ class GoogleIotCoreClient:
         # Enable TLS support
         self.__client.tls_set(ca_certs=self.__credentials.root_ca_location)
         # Setup the function listeners
-        self.__client.on_connect = self.__functions.on_connect
-        self.__client.on_disconnect = self.__functions.on_disconnect
-        self.__client.on_publish = self.__functions.on_publish
-        self.__client.on_message = self.__functions.on_message
+        if self.__functions.on_connect is not None:
+            self.__client.on_connect = self.__functions.on_connect
+        if self.__functions.on_disconnect is not None:
+            self.__client.on_disconnect = self.__functions.on_disconnect
+        if self.__functions.on_publish is not None:
+            self.__client.on_publish = self.__functions.on_publish
+        if self.__functions.on_message is not None:
+            self.__client.on_message = self.__functions.on_message
         # Connect to the MQTT Google Iot Core bridge
         self.__client.connect("mqtt.googleapis.com", 8883)
         # Setup config
