@@ -77,8 +77,6 @@ class MQTTDevice:
         if self.__functions.on_disconnected is not None:
             self.__client.on_disconnect = self.__functions.on_disconnected
         print(f"Functions applied to client {self.__name}")
-
-    def enable_custom_callbacks(self):
         if self.__functions.on_message is None:
             self.__client.on_message = self.__on_message_custom
 
@@ -102,7 +100,7 @@ class MQTTDevice:
                       f"callback defined.")
             else:
                 self.__topics[topic_string] = callback_function
-                self.__client.subscribe("#")
+                self.__client.subscribe(topic_string)
 
     def __on_message_custom(self, *args):
         print(args)
@@ -110,7 +108,8 @@ class MQTTDevice:
         print(message.topic)
         for topic in list(self.__topics.keys()):
             if topic == message.topic:
-                self.__topics[topic]()
+                function_custom = self.__topics[topic]
+                function_custom(*args)
 
     def activate_loop_start(self):
         self.__client.loop_start()
@@ -128,7 +127,6 @@ if __name__ == "__main__":
     x_functions.on_connect = on_connect_event
     client = MQTTDevice(x_functions, "smartswarm")
     client.connect("172.23.83.254", 1883, 60)
-    client.enable_custom_callbacks()
     client.sub_to_topic("#", all_messages)
     client.activate_loop_start()
     while True:
