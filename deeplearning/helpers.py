@@ -180,7 +180,7 @@ def clean_shape_print(dataset):
 def create_early_stopping(monitor='loss', verbose=1, patience=5) -> EarlyStopping:
     """
     Create an early stopping object.\n
-    :param monitor: default to balanced
+    :param monitor: default to loss
     :param verbose: verbose
     :param patience: the patience of the es
     :return: EarlyStopping
